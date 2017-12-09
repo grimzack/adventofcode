@@ -40,10 +40,8 @@ def checksum_calculator(input_str):
 		for number in row:
 			# figure out if the rest of the row can be divided into the first number
 			for i in range(len(row)):
-				dividend = number / float(row[i])
-				# print "number = ", number, "dividend = ", dividend
-				if (((dividend * 10) % 10 == 0) and (dividend > 1)):
-					sum_of_divisions += int(dividend)
+				if (((number % row[i]) == 0) and ((number / row[i]) > 1)):
+					sum_of_divisions += (number / row[i])
 
 	print sum_of_divisions
 
