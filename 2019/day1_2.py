@@ -1,9 +1,7 @@
-# aoc2019_12_1
-
-from math import floor
+# Advent of Code 2019 Day 1 Part 2
 
 def main():
-    mass_list = read_input_file_to_list('input_12_1.txt')
+    mass_list = read_input_file_to_list('input_1.txt')
     total_fuel = sum_all_fuels(mass_list)
     print(total_fuel)
     
@@ -19,7 +17,7 @@ def sum_all_fuels(mass_list):
     return total_fuel
 
 def calculate_fuel(mass):
-    fuel_needed = (floor(mass / 3)) - 2
+    fuel_needed = (mass // 3) - 2
     return fuel_needed
 
 def read_input_file_to_list(input):
