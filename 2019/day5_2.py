@@ -3,18 +3,14 @@
 def main():
     input_file = "input_5.txt"
     program = read_input_file_to_int_list(input_file)
-    print("len of program =", len(program))
     test_program = [103,4,3,4,33]
     answer_list = run_program(program)
 
 def run_program(program):
     inst_pointer = 0
     inst = program[inst_pointer]
-    print("Current instruction =", inst)
     opcode, param_modes = decode_instruction(inst)
-    print("opcode, param_modes before while:", opcode, param_modes)
     while (opcode != 99):
-        print("inst_pointer =", inst_pointer)
         if (opcode == 1):
             # OpCode = 1: (param_a + param_b => param_c)
             if (param_modes[0] == ParameterMode.POSITION):
@@ -23,7 +19,7 @@ def run_program(program):
             elif (param_modes[0] == ParameterMode.IMMEDIATE):
                 param_a = program[inst_pointer + 1]
             else:
-                print("bad first ParamMode")
+                print("Bad first ParamMode:", param_modes[0], "for OpCode:", opcode)
 
             if (param_modes[1] == ParameterMode.POSITION):
                 param_b_loc = program[inst_pointer + 2]
@@ -31,7 +27,7 @@ def run_program(program):
             elif (param_modes[1] == ParameterMode.IMMEDIATE):
                 param_b = program[inst_pointer + 2]
             else:
-                print("bad second ParamMode")
+                print("Bad second ParamMode:", param_modes[1], "for OpCode:", opcode)
 
             if (param_modes[2] == ParameterMode.POSITION):
                 print("inst_pointer = ", inst_pointer)
@@ -39,9 +35,8 @@ def run_program(program):
             elif (param_modes[2] == ParameterMode.IMMEDIATE):
                 param_c = inst_pointer + 3
             else:
-                print("bad third ParamMode")
+                print("Bad third ParamMode:", param_modes[3], "for OpCode:", opcode)
             
-            print("param_a =", param_a, " param_b =", param_b, " param_c =", param_c)
             program[param_c] = param_a + param_b
             inst_pointer += 4
 
@@ -53,7 +48,7 @@ def run_program(program):
             elif (param_modes[0] == ParameterMode.IMMEDIATE):
                 param_a = program[inst_pointer + 1]
             else:
-                print("bad first ParamMode")
+                print("Bad first ParamMode:", param_modes[0], "for OpCode:", opcode)
 
             if (param_modes[1] == ParameterMode.POSITION):
                 param_b_loc = program[inst_pointer + 2]
@@ -61,14 +56,14 @@ def run_program(program):
             elif (param_modes[1] == ParameterMode.IMMEDIATE):
                 param_b = program[inst_pointer + 2]
             else:
-                print("bad second ParamMode")
+                print("Bad second ParamMode:", param_modes[1], "for OpCode:", opcode)
 
             if (param_modes[2] == ParameterMode.POSITION):
                 param_c = program[inst_pointer + 3]
             elif (param_modes[2] == ParameterMode.IMMEDIATE):
                 param_c = inst_pointer + 3
             else:
-                print("bad third ParamMode")
+                print("Bad third ParamMode:", param_modes[2], "for OpCode:", opcode)
 
             print("param_a =", param_a, " param_b =", param_b, " param_c =", param_c)
             program[param_c] = param_a * param_b
@@ -81,11 +76,11 @@ def run_program(program):
             elif (param_modes[0] == ParameterMode.IMMEDIATE):
                 param_a = inst_pointer + 1
             else:
-                print("Bad parameter for opcode == 3")
+                print("Bad ParameterMode for opcode == 3")
+    
             input_param = input("Please provide input:")
             input_int = int(input_param)
 
-            print("Placing input =", input_int, " into location =", param_a)
             program[param_a] = input_int
 
             inst_pointer += 2
@@ -98,7 +93,8 @@ def run_program(program):
             elif (param_modes[0] == ParameterMode.IMMEDIATE):
                 param_a = program[inst_pointer + 1]
             else:
-                print("Bad first param for opcode == 4")
+                print("Bad ParameterMode for opcode = 4")
+
             print("DIAGNOSTIC PRINT MESSAGE 8=============>", param_a)
             inst_pointer += 2
         
@@ -135,7 +131,6 @@ def run_program(program):
             elif (param_modes[1] == ParameterMode.IMMEDIATE):
                 param_b = program[inst_pointer + 2]
 
-            print("param_a =", param_a, " param_b =", param_b)
             if (param_a == 0):
                 inst_pointer = param_b
             else:
@@ -159,8 +154,6 @@ def run_program(program):
                 param_c = program[inst_pointer + 3]
             elif (param_modes[2] == ParameterMode.IMMEDIATE):
                 param_c = inst_pointer + 3
-            else:
-                print("bad third ParamMode")
 
             if (param_a < param_b):
                 program[param_c] = 1
@@ -187,8 +180,6 @@ def run_program(program):
                 param_c = program[inst_pointer + 3]
             elif (param_modes[2] == ParameterMode.IMMEDIATE):
                 param_c = inst_pointer + 3
-            else:
-                print("bad third ParamMode")
 
             if (param_a == param_b):
                 program[param_c] = 1
@@ -210,10 +201,12 @@ def run_program(program):
 def decode_instruction(inst):
     opcode = int(str(inst)[-2:])
     print("decoded opcode:", opcode)
+
     # For now we'll just assume we always have at least 3 parameter modes
     reversed_instr = str(inst)[-3::-1] + "000" # could be missing leading 0's
     print("reversed_inst =", reversed_instr)
     param_modes = []
+
     for char in reversed_instr:
         if char == '0':
             param_modes.append(ParameterMode.POSITION)
