@@ -1,12 +1,33 @@
-# Advent of Code 2019 Day 5 Part 1
+# Advent of Code 2019 Day 7 Part 1
+
+from collections import deque
+import itertools
 
 def main():
-    input_file = "input_5.txt"
-    program = read_input_file_to_int_list(input_file)
-    test_program = [103,4,3,4,33]
-    answer_list = run_program(program)
+    original_program = read_input_file_to_int_list('2019/input_7.txt')
+    usable_program = original_program.copy()
+    modules = ['A', 'B', 'C', 'D', 'E']
+    possible_signals = list(itertools.permutations([0,1,2,3,4]))
+    output = 0
+    max_output = 0
+    in_val = deque()
+    for permutation in possible_signals:
+        i = 0
+        for module in modules:
+            in_val.append(permutation[i])
+            in_val.append(output)
+            print("using input:", permutation[i], "then output:", output)
+            output = run_program(usable_program, in_val)
+            usable_program = original_program.copy()
+            i += 1
+        if (output > max_output):
+            max_output = output
+        output = 0
+    print("Max Output =", max_output)
+    print(original_program)
 
-def run_program(program):
+def run_program(program, input_value):
+    output = 0
     inst_pointer = 0
     inst = program[inst_pointer]
     opcode, param_modes = decode_instruction(inst)
@@ -62,10 +83,11 @@ def run_program(program):
             elif (param_modes[0] == ParameterMode.IMMEDIATE):
                 param_a = inst_pointer + 1
     
-            input_param = input("Please provide input:")
-            input_int = int(input_param)
-
-            program[param_a] = input_int
+            # input_param = input("Please provide input:")
+            # input_int = int(input_param)
+            next_input = input_value.popleft()
+            print("using input_value =", next_input)
+            program[param_a] = next_input
 
             inst_pointer += 2
 
@@ -80,6 +102,7 @@ def run_program(program):
                 print("Bad ParameterMode for opcode = 4")
 
             print("DIAGNOSTIC PRINT MESSAGE 8=============>", param_a)
+            output = param_a
             inst_pointer += 2
         
         elif (opcode == 5):
@@ -179,7 +202,8 @@ def run_program(program):
         inst = program[inst_pointer]
         opcode, param_modes = decode_instruction(inst)
 
-    return program
+    return output
+
 
 def decode_instruction(inst):
     opcode = int(str(inst)[-2:])
@@ -198,15 +222,17 @@ def decode_instruction(inst):
 
     return opcode, param_modes
 
+
+class ParameterMode:
+    POSITION = 0
+    IMMEDIATE = 1
+
+
 def read_input_file_to_int_list(input):
     input_list = []
     with open(input) as file:
         input_list = list(map(int, file.readline().split(',')))
     return input_list
 
-class ParameterMode:
-    POSITION = 0
-    IMMEDIATE = 1
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
