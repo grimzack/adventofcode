@@ -3,13 +3,12 @@
 from collections import defaultdict, deque
 
 def main():
-    orbits_list = parse_input_to_tuple_list("2019/input_6_demo.txt")
+    orbits_list = parse_input_to_tuple_list("2019/input_6.txt")
     orbit_graph = build_orbit_graph(orbits_list)
-    print(orbit_graph)
 
-    orbit_path = orbit_graph.find_path("YOU", "SAN")
-    print(orbit_path)
-    print("num_hops =", len(orbit_path))
+    jump_path = orbit_graph.find_path("YOU", "SAN")
+    print("Jump Path =", jump_path)
+    print("num_hops =", len(jump_path))
 
 def build_orbit_graph(orbits_list):
     orbit_graph = OrbitGraph(orbits_list)
@@ -28,7 +27,6 @@ def parse_input_to_tuple_list(input_file):
 class OrbitGraph:
     def __init__(self, orbits):
         self.orbit_graph = defaultdict(list)
-        self.orbited_by = defaultdict(list)
         self.body_set = set()
         self.add_orbits(orbits)
 
@@ -39,32 +37,37 @@ class OrbitGraph:
             if (body_orbited_by not in self.body_set):
                 self.body_set.add(body_orbited_by)
 
-            self.orbited_by[orbiting_body].append(body_orbited_by)
             self.orbit_graph[orbiting_body].append(body_orbited_by)
             self.orbit_graph[body_orbited_by].append(orbiting_body)
 
     def find_path(self, begin, end):
         path = []
-        # visited = set()
-        orbiters = self.orbit_graph[begin]
-        print("orbiters:", orbiters)
-        to_visit = orbiters
-        while (len(to_visit) != 0):
-            cur_node = to_visit.pop()
-            if (cur_node not in path):
-                cur_node_orbiters = self.orbited_by[cur_node]
-                if (cur_node != begin):
-                    path.append(cur_node)
-                if (end in cur_node_orbiters):
-                    return path
+        visited = set()
+        to_visit = deque()
+        path_map = defaultdict(list)
 
-                # visited.add(cur_node)
-                cur_node_connections = self.orbit_graph[cur_node]
-                to_visit += cur_node_connections
+        to_visit.append(begin)
+        while (len(to_visit) != 0):
+            cur_node = to_visit.popleft()
+            if cur_node == end:
+                break
+
+            if (cur_node not in visited):
+                visited.add(cur_node)
+                cur_node_orbiters = self.orbit_graph[cur_node]
+                
+                for orbiter in cur_node_orbiters:
+                    to_visit.append(orbiter)
+                    if (path_map[orbiter] == []):
+                        path_map[orbiter] = cur_node
+
+        if (end in path_map):
+            parent = end
+            while (parent != begin):
+                parent = path_map[parent]
+                path.append(parent)
 
         return path
-            
-        
 
     def find_total_orbits(self):
         if (len(self.orbit_graph) == 0):
