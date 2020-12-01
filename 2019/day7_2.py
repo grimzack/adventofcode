@@ -43,23 +43,23 @@ def main():
 
         # Run each amp and save its output so future amps can retrieve
         amp_a.set_input_param(module_output[amp_e.comp_name])
-        print("using input of output =", amp_a.input_param)
+        # print("using input of output =", amp_a.input_param)
         module_output[amp_a.comp_name] = amp_a.run_program()
 
         amp_b.set_input_param(module_output[amp_a.comp_name])
-        print("using input of output =", amp_b.input_param)
+        # print("using input of output =", amp_b.input_param)
         module_output[amp_b.comp_name] = amp_b.run_program()
 
         amp_c.set_input_param(module_output[amp_b.comp_name])
-        print("using input of output =", amp_c.input_param)
+        # print("using input of output =", amp_c.input_param)
         module_output[amp_c.comp_name] = amp_c.run_program()
 
         amp_d.set_input_param(module_output[amp_c.comp_name])
-        print("using input of output =", amp_d.input_param)
+        # print("using input of output =", amp_d.input_param)
         module_output[amp_d.comp_name] = amp_d.run_program()
 
         amp_e.set_input_param(module_output[amp_d.comp_name])
-        print("using input of output =", amp_e.input_param)
+        # print("using input of output =", amp_e.input_param)
         module_output[amp_e.comp_name] = amp_e.run_program()
 
         output = module_output[amp_e.comp_name]
