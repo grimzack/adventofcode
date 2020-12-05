@@ -19,4 +19,14 @@ public class Utils {
     public static List<Integer> getInputAsInts(String day) throws IOException {
         return getInputAsStrings(day).stream().map(Integer::parseInt).collect(Collectors.toList());
     }
+
+    public static int countCharsInString(String inStr, char targetChar) {
+        int count = 0;
+
+        for (int i = 0; i < inStr.length(); i++) {
+            if (inStr.charAt(i) == targetChar) count++;
+        }
+
+        return count;
+    }
 }

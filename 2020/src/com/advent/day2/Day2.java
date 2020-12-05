@@ -24,11 +24,8 @@ public class Day2 {
 
     private static boolean matchesPolicy(String input) {
         PasswordPolicy policy = PasswordPolicy.newPolicy(input);
-        int count = 0;
 
-        for (int i = 0; i < policy.password.length(); i++) {
-            if (policy.password.charAt(i) == policy.character) count++;
-        }
+        int count = Utils.countCharsInString(policy.password, policy.character);
 
         return ((count >= policy.firstBound) && (count <= policy.lastBound));
     }
