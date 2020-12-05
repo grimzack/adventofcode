@@ -10,16 +10,17 @@ import java.util.regex.Pattern;
 public class Day2 {
     private static final String DAY = "day2";
 
-    public static int partOne() throws IOException {
+    public static void partOne() throws IOException {
         List<String> input = Utils.getInputAsStrings(DAY);
 
-        return (int) input.stream().filter(Day2::matchesPolicy).count();
+        System.out.println("Answer to Day 2 Part 1 = " + input.stream().filter(Day2::matchesPolicy).count());
     }
 
-    public static int partTwo() throws IOException {
+    public static void partTwo() throws IOException {
         List<String> input = Utils.getInputAsStrings(DAY);
 
-        return (int) input.stream().filter(Day2::matchesOfficialTobogganCorporatePolicy).count();
+        System.out.println("Answer to Day 2 Part 2 = " +
+                input.stream().filter(Day2::matchesOfficialTobogganCorporatePolicy).count());
     }
 
     private static boolean matchesPolicy(String input) {

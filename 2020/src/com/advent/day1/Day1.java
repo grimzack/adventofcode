@@ -1,6 +1,7 @@
 package com.advent.day1;
 
 import com.advent.Utils;
+import com.advent.day2.Day2;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import java.util.Map;
 public class Day1 {
     private static String DAY = "day1";
 
-    public static int partOne() throws IOException {
+    public static void partOne() throws IOException {
         Map<Integer, Integer> inverse2020Map = new HashMap<>();
         List<Integer> input = Utils.getInputAsInts(DAY);
 
@@ -20,14 +21,12 @@ public class Day1 {
 
         for (Integer num : input) {
             if (inverse2020Map.containsKey(num)) {
-                return (num * inverse2020Map.get(num));
+                System.out.println("Answer to Day 1 Part 1 = " + (num * inverse2020Map.get(num)));
             }
         }
-
-        return 0;
     }
 
-    public static int partTwo() throws IOException {
+    public static void partTwo() throws IOException {
         Map<Integer, Integer> inverse2020Map = new HashMap<>();
         List<Integer> input = Utils.getInputAsInts(DAY);
 
@@ -40,12 +39,10 @@ public class Day1 {
             for (int secondNum : input) {
                 int numSum = firstNum + secondNum;
                 if (inverse2020Map.containsKey(numSum)) {
-                    return firstNum * secondNum * inverse2020Map.get(numSum);
+                    System.out.println("Answer to Day 1 Part 2 = " + firstNum * secondNum * inverse2020Map.get(numSum));
                 }
             }
         }
-
-        return 0;
     }
 
 }

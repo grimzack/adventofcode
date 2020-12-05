@@ -10,18 +10,18 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Day4 {
-    public static int partOne() throws FileNotFoundException {
+    public static void partOne() throws FileNotFoundException {
         List<Passport> passports = parseInput();
-        int validPasswords = 0;
+        int validPassports = 0;
 
         for (Passport pass : passports) {
-            if (pass != null) validPasswords++;
+            if (pass != null) validPassports++;
         }
 
-        return validPasswords;
+        System.out.println("Answer to Day 4 Part 1 = " + validPassports);
     }
 
-    public static int partTwo() throws FileNotFoundException {
+    public static void partTwo() throws FileNotFoundException {
         List<Passport> passports = parseInput();
         int validPassports = 0;
 
@@ -29,7 +29,7 @@ public class Day4 {
             if (passport != null && PassportValidator.validate(passport)) validPassports++;
         }
 
-        return validPassports;
+        System.out.println("Answer to Day 4 Part 2 = " + validPassports);
     }
 
     private static List<Passport> parseInput() throws FileNotFoundException {

@@ -11,13 +11,13 @@ public class Day3 {
     private static final String DAY = "day3";
     private static final char TREE_CHAR = '#';
 
-    public static Integer partOne() throws IOException {
+    public static void partOne() throws IOException {
         List<String> input = Utils.getInputAsStrings(DAY);
 
-        return findTrees(3, 1, input);
+        System.out.println("Answer to Day 3 Part 1 = " + findTrees(3, 1, input));
     }
 
-    public static long partTwo() throws IOException {
+    public static void partTwo() throws IOException {
         List<String> input = Utils.getInputAsStrings(DAY);
 
         List<Integer> colSteps = Arrays.asList(1, 3, 5, 7, 1);
@@ -33,7 +33,8 @@ public class Day3 {
         for (long slope : numTreesPerSlope) {
             totalTrees = totalTrees * slope;
         }
-        return totalTrees;
+
+        System.out.println("Answer to Day 3 Part 2 = " + totalTrees);
     }
 
     private static int findTrees(int colStep, int rowStep, List<String> input) {
