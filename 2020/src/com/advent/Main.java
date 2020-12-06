@@ -1,13 +1,13 @@
 package com.advent;
 
-import com.advent.day5.Day5;
+import com.advent.day6.Day6;
 
 import java.io.IOException;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Day5.partOne();
-        Day5.partTwo();
+        Day6.partOne();
+        Day6.partTwo();
     }
 }
