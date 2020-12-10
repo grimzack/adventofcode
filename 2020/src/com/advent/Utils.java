@@ -20,6 +20,10 @@ public class Utils {
         return getInputAsStrings(day).stream().map(Integer::parseInt).collect(Collectors.toList());
     }
 
+    public static List<Long> getInputAsLongs(String day) throws IOException {
+        return getInputAsStrings(day).stream().map(Long::parseLong).collect(Collectors.toList());
+    }
+
     public static int countCharsInString(String inStr, char targetChar) {
         int count = 0;
 
