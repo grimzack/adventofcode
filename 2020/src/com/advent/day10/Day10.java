@@ -12,9 +12,6 @@ public class Day10 {
     private static final String DAY = "day10";
     private static final String SAMPLE = "sample";
 
-    private static final String INPUT_FILE =
-            "/Users/zackgrim/Documents/adventofcode/2020/src/com/advent/data/sample.input";
-
     public static void main(String[] args) throws IOException {
         partOne();
         partTwo();
